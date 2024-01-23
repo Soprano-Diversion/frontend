@@ -1,5 +1,5 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
 export default {
-  Home: lazy(() => import("./home")),
-}
+	Home: lazy(() => import('./home')),
+};

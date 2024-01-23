@@ -6,23 +6,23 @@ import { Route } from 'react-router-dom';
 import Pages from '@/pages';
 
 export default function App() {
-  return (
-    <>
-      <Toaster 
-        position='center'
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-        }}
-      />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path='/' element={<Pages.Home />} />
-        </Routes>
-      </Suspense>
-    </>
-  );
+	return (
+		<>
+			<Toaster
+				position='center'
+				toastOptions={{
+					duration: 3000,
+					style: {
+						background: '#363636',
+						color: '#fff',
+					},
+				}}
+			/>
+			<Suspense fallback={<PageLoader />}>
+				<Routes>
+					<Route path='/' element={<Pages.Home />} />
+				</Routes>
+			</Suspense>
+		</>
+	);
 }

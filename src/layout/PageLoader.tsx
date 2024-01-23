@@ -7,18 +7,18 @@ const PageLoader = () => {
 
 	useEffect(() => {
 		if (ref.current) {
-      lottie.loadAnimation({
-        container: ref.current,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        animationData: pageLogoAnimation,
-      });
+			lottie.loadAnimation({
+				container: ref.current,
+				renderer: 'svg',
+				loop: true,
+				autoplay: true,
+				animationData: pageLogoAnimation,
+			});
 
-      return () => {
-        lottie.destroy();
-      };
-    }
+			return () => {
+				lottie.destroy();
+			};
+		}
 	}, [ref]);
 
 	return (
