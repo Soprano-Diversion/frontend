@@ -49,5 +49,5 @@ jobs:
         run: pnpm install
 
       - name: Prettier Check
-        run: pnpm prettier:check
+        run: pnpm format
         continue-on-error: ${{ !inputs.fail-on-error }}
