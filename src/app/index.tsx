@@ -3,6 +3,7 @@ import { Toaster } from 'react-stacked-toast';
 import { PageLoader } from '@/layout';
 import { Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
+import Pages from '@/pages';
 
 export default function App() {
   return (
@@ -19,7 +20,7 @@ export default function App() {
       />
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path='/' element={<PageLoader />} />
+          <Route path='/' element={<Pages.Home />} />
         </Routes>
       </Suspense>
     </>

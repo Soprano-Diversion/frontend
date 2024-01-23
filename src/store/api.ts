@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query";
 
 const defaultQuery = retry(
   fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
+    baseUrl: "http://localhost:4000",
     credentials: "include",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
