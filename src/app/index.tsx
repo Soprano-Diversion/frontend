@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Toaster } from 'react-stacked-toast';
-import { PageLoader } from '@/layout';
+import { Layout, PageLoader } from '@/layout';
 import { Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import Pages from '@/pages';
@@ -20,7 +20,10 @@ export default function App() {
 			/>
 			<Suspense fallback={<PageLoader />}>
 				<Routes>
-					<Route path='/' element={<Pages.Home />} />
+					<Route path='/' element={<Layout />}>
+						<Route index element={<Pages.Home />} />
+						<Route path='editor' element={<Pages.Editor />} />
+					</Route>
 				</Routes>
 			</Suspense>
 		</>
