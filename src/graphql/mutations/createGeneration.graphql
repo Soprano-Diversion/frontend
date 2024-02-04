@@ -1,0 +1,8 @@
+mutation CreateGeneration($input: GenerationCreateInput!) {
+  createGeneration(input: $input) {
+    id
+    name
+    description
+    prompt
+  }
+}

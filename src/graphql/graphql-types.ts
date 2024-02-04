@@ -25,6 +25,18 @@ export type AuthPayload = {
 	user: User;
 };
 
+/** Generated code from sketches */
+export type Code = {
+	__typename?: 'Code';
+	createdAt: Scalars['DateTime']['output'];
+	deletedAt: Scalars['DateTime']['output'];
+	dsl?: Maybe<Scalars['String']['output']>;
+	html?: Maybe<Scalars['String']['output']>;
+	id: Scalars['Int']['output'];
+	react?: Maybe<Scalars['String']['output']>;
+	updatedAt: Scalars['DateTime']['output'];
+};
+
 export type File = {
 	__typename?: 'File';
 	encoding?: Maybe<Scalars['String']['output']>;
@@ -43,7 +55,9 @@ export enum GenderType {
 /** Generateed UIs from sketches through users */
 export type Generation = {
 	__typename?: 'Generation';
-	code?: Maybe<Scalars['String']['output']>;
+	/** Code of the generation */
+	code?: Maybe<Code>;
+	codeId?: Maybe<Scalars['Int']['output']>;
 	createdAt: Scalars['DateTime']['output'];
 	deletedAt: Scalars['DateTime']['output'];
 	description?: Maybe<Scalars['String']['output']>;
@@ -60,6 +74,26 @@ export type Generation = {
 	/** User who generated the UI */
 	user: User;
 	userId: Scalars['Int']['output'];
+};
+
+/** Input for creating a generation */
+export type GenerationCreateInput = {
+	description?: InputMaybe<Scalars['String']['input']>;
+	imageId: Scalars['Int']['input'];
+	isPublic: Scalars['Boolean']['input'];
+	name?: InputMaybe<Scalars['String']['input']>;
+	prompt: Scalars['String']['input'];
+	threadId?: InputMaybe<Scalars['Int']['input']>;
+	userId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** Input for updating a generation */
+export type GenerationUpdateInput = {
+	description?: InputMaybe<Scalars['String']['input']>;
+	isPublic?: InputMaybe<Scalars['Boolean']['input']>;
+	name?: InputMaybe<Scalars['String']['input']>;
+	prompt?: InputMaybe<Scalars['String']['input']>;
+	threadId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Images used in generation of UI */
@@ -82,6 +116,7 @@ export type Mutation = {
 	__typename?: 'Mutation';
 	/** Change the password of the current logged in user */
 	changePassword?: Maybe<Scalars['Boolean']['output']>;
+	createGeneration?: Maybe<Generation>;
 	/** Login the user and return the token and user */
 	login?: Maybe<AuthPayload>;
 	/** Create a new user and return the token and user */
@@ -96,6 +131,10 @@ export type MutationChangePasswordArgs = {
 	newPassword: Scalars['String']['input'];
 	oldPassword?: InputMaybe<Scalars['String']['input']>;
 	username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationCreateGenerationArgs = {
+	input: GenerationCreateInput;
 };
 
 export type MutationLoginArgs = {
@@ -125,10 +164,25 @@ export type PaginatedUserType = {
 
 export type Query = {
 	__typename?: 'Query';
+	/** Get the generation by various means */
+	generation?: Maybe<Array<Maybe<Generation>>>;
+	/** Retrieves an image by its ID */
+	image?: Maybe<Array<Maybe<Image>>>;
 	/** Get the current logged in user */
 	me?: Maybe<User>;
 	/** Retrieves a list of users depending on the query arguments */
 	user?: Maybe<PaginatedUserType>;
+};
+
+export type QueryGenerationArgs = {
+	id?: InputMaybe<Scalars['Int']['input']>;
+	name?: InputMaybe<Scalars['String']['input']>;
+	threadId?: InputMaybe<Scalars['Int']['input']>;
+	userId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryImageArgs = {
+	id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryUserArgs = {
@@ -208,6 +262,15 @@ export type PaginationInputType = {
 	take?: Scalars['Int']['input'];
 };
 
+export type CreateGenerationMutationVariables = Exact<{
+	input: GenerationCreateInput;
+}>;
+
+export type CreateGenerationMutation = {
+	__typename?: 'Mutation';
+	createGeneration?: { __typename?: 'Generation'; id: number; name: string; description?: string | null; prompt: string } | null;
+};
+
 export type UploadImageMutationVariables = Exact<{
 	input?: InputMaybe<ImageCreateInputType>;
 }>;
@@ -225,6 +288,65 @@ export type UploadImageMutation = {
 	} | null;
 };
 
+export type GenerationQueryVariables = Exact<{
+	generationId?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type GenerationQuery = {
+	__typename?: 'Query';
+	generation?: Array<{
+		__typename?: 'Generation';
+		id: number;
+		name: string;
+		description?: string | null;
+		prompt: string;
+		isPublic: boolean;
+		createdAt: any;
+		code?: { __typename?: 'Code'; dsl?: string | null; html?: string | null; react?: string | null } | null;
+	} | null> | null;
+};
+
+export const CreateGenerationDocument = gql`
+	mutation CreateGeneration($input: GenerationCreateInput!) {
+		createGeneration(input: $input) {
+			id
+			name
+			description
+			prompt
+		}
+	}
+`;
+export type CreateGenerationMutationFn = Apollo.MutationFunction<CreateGenerationMutation, CreateGenerationMutationVariables>;
+
+/**
+ * __useCreateGenerationMutation__
+ *
+ * To run a mutation, you first call `useCreateGenerationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateGenerationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createGenerationMutation, { data, loading, error }] = useCreateGenerationMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateGenerationMutation(
+	baseOptions?: Apollo.MutationHookOptions<CreateGenerationMutation, CreateGenerationMutationVariables>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<CreateGenerationMutation, CreateGenerationMutationVariables>(CreateGenerationDocument, options);
+}
+export type CreateGenerationMutationHookResult = ReturnType<typeof useCreateGenerationMutation>;
+export type CreateGenerationMutationResult = Apollo.MutationResult<CreateGenerationMutation>;
+export type CreateGenerationMutationOptions = Apollo.BaseMutationOptions<
+	CreateGenerationMutation,
+	CreateGenerationMutationVariables
+>;
 export const UploadImageDocument = gql`
 	mutation UploadImage($input: ImageCreateInputType) {
 		uploadImage(input: $input) {
@@ -265,3 +387,55 @@ export function useUploadImageMutation(
 export type UploadImageMutationHookResult = ReturnType<typeof useUploadImageMutation>;
 export type UploadImageMutationResult = Apollo.MutationResult<UploadImageMutation>;
 export type UploadImageMutationOptions = Apollo.BaseMutationOptions<UploadImageMutation, UploadImageMutationVariables>;
+export const GenerationDocument = gql`
+	query generation($generationId: Int) {
+		generation(id: $generationId) {
+			id
+			name
+			description
+			prompt
+			isPublic
+			createdAt
+			code {
+				dsl
+				html
+				react
+			}
+		}
+	}
+`;
+
+/**
+ * __useGenerationQuery__
+ *
+ * To run a query within a React component, call `useGenerationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGenerationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGenerationQuery({
+ *   variables: {
+ *      generationId: // value for 'generationId'
+ *   },
+ * });
+ */
+export function useGenerationQuery(baseOptions?: Apollo.QueryHookOptions<GenerationQuery, GenerationQueryVariables>) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<GenerationQuery, GenerationQueryVariables>(GenerationDocument, options);
+}
+export function useGenerationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GenerationQuery, GenerationQueryVariables>) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<GenerationQuery, GenerationQueryVariables>(GenerationDocument, options);
+}
+export function useGenerationSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<GenerationQuery, GenerationQueryVariables>
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<GenerationQuery, GenerationQueryVariables>(GenerationDocument, options);
+}
+export type GenerationQueryHookResult = ReturnType<typeof useGenerationQuery>;
+export type GenerationLazyQueryHookResult = ReturnType<typeof useGenerationLazyQuery>;
+export type GenerationSuspenseQueryHookResult = ReturnType<typeof useGenerationSuspenseQuery>;
+export type GenerationQueryResult = Apollo.QueryResult<GenerationQuery, GenerationQueryVariables>;
