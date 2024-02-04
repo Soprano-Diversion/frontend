@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes textShine {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
+}
+
+.text-gradient-animation {
+	background: linear-gradient(
+			to right,
+			#FFA500 0%,
+			#FF8C00 30%,
+			#FF6347 70%,
+			#FF4500 80%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-fill-color: transparent;
+	background-size: 500% auto;
+	animation: textShine 2s ease-in-out infinite alternate;
+}
+@layer utilities {
+	.transform-hover:hover,
+	.transform-hover:focus {
+		--transform-translate: translateY(-0.25em);
+		transform: var(--transform-translate);
+	}
+
+	.shadow-hover:hover,
+	.shadow-hover:focus {
+		--hover: 0 0.5em 0.5em -0.4em var(--hover);
+		box-shadow: var(--hover);
+	}
+
+	.outline-none:focus {
+		outline: none;
+	}
+}
+
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;

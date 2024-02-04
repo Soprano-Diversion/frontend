@@ -24,6 +24,7 @@ export default function App() {
 						<Route index element={<Pages.Home />} />
 						<Route path='generate' element={<Pages.Generate />} />
 						<Route path='editor' element={<Pages.Editor />} />
+						<Route path={'about'} element={<Pages.About />} />
 					</Route>
 				</Routes>
 			</Suspense>
