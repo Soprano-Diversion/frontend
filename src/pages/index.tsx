@@ -4,4 +4,5 @@ export default {
 	Home: lazy(() => import('./home')),
 	Editor: lazy(() => import('./editor')),
 	About: lazy(() => import('./about')),
+	Generate: lazy(() => import('./generate')),
 };

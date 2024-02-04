@@ -1,0 +1,10 @@
+mutation UploadImage($input: ImageCreateInputType) {
+  uploadImage(input: $input) {
+    id
+    name
+    url
+    createdAt
+    updatedAt
+    deletedAt
+  }
+}
