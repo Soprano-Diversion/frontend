@@ -1,0 +1,15 @@
+query generation($generationId: Int) {
+  generation(id: $generationId) {
+    id
+    name
+    description
+    prompt
+    isPublic
+    createdAt
+    code {
+      dsl
+      html
+      react
+    }
+  }
+}
