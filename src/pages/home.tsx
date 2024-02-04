@@ -6,9 +6,9 @@ export default function Home() {
 	return (
 		<div className='container'>
 			<ModeToggle />
-			<Link to='/editor'>
+			<Link to='/generate'>
 				{' '}
-				<Button>Editor</Button>{' '}
+				<Button>Generate</Button>{' '}
 			</Link>
 		</div>
 	);
